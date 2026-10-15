@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#7147d8">
+<title>BuildA — Match Tiles, Build a Home</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <a class="brand" href="#" aria-label="BuildA home"><span class="logo">🏠</span><span>Build<span>A</span></span></a>
+  <div class="top-actions"><span class="course-tag">BUILDING CONSTRUCTION</span><button id="soundToggle" class="small-btn" aria-pressed="true">🔊 Sound on</button></div>
+</header>
+<main>
+<section id="home" class="screen hero">
+  <div class="hero-copy">
+    <div class="eyebrow">A MATCH-3 BUILDING ADVENTURE</div>
+    <h1>Match tiles.<br><em>Build your dream home.</em></h1>
+    <p class="intro">Swap colourful construction tiles, watch out for bomb tiles, and answer quick building questions to earn power-ups. Can you finish the 3D house before time runs out?</p>
+    <div class="outcome"><span>🎯</span><div><b>Learning mission</b><p>Identify the basic functions, materials and construction principles of floors, walls, ceilings and roofs.</p></div></div>
+    <div class="level-preview"><span>🌱 Easy</span><span>🧰 Medium</span><span>🏗️ Hard</span><span>⏱ 5 minutes per level</span></div>
+    <button id="playBtn" class="primary">Start building <b>▶</b></button>
+    <p class="fine">9 questions total · 3 questions per level · Cute sound effects</p>
+  </div>
+  <div class="hero-visual">
+    <div class="sun">☀️</div><div class="float f1">🧱</div><div class="float f2">✨</div>
+    <div class="illustrated-house"><div class="illustrated-roof"><span>🪟</span></div><div class="illustrated-walls"><div class="win"></div><div class="door">🔑</div><div class="win"></div></div><div class="illustrated-floor"></div></div>
+    <div class="lawn"></div><div class="caption">Your next great build starts here!</div>
+  </div>
+</section>
+
+<section id="instructions" class="screen hidden">
+  <button class="text-btn" id="backHome">← Home</button>
+  <div class="section-heading"><div class="eyebrow">BEFORE YOU BUILD</div><h2>How to play <em>BuildA</em></h2><p>Match, dodge, answer and upgrade.</p></div>
+  <div class="instruction-grid">
+    <article><span>🍬</span><h3>1. Match three tiles</h3><p>Tap one tile, then an adjacent tile to swap them. Match three or more of the same icon to collect materials.</p></article>
+    <article><span>💣</span><h3>2. Bombs trigger quizzes</h3><p>Match a bomb tile to pause the board and answer a building-construction question. Every bomb match triggers a question.</p></article>
+    <article><span>🏡</span><h3>3. Build the 3D house</h3><p>Correct answers earn a power-up tile and help finish the house. A wrong answer costs 1 second. Complete 3 questions to unlock the next level.</p></article>
+  </div>
+  <div class="rules"><span>⭐ Match tiles: +10 per tile</span><span>🧠 Correct answer: +100 + power-up</span><span>❌ Wrong answer: −1 second</span><span>⏱ 5:00 each level</span></div>
+  <button id="beginBtn" class="primary centered">Let's build! ▶</button>
+</section>
+
+<section id="game" class="screen hidden">
+  <div class="game-top"><button id="exitBtn" class="text-btn">← Exit</button><div class="game-brand">🏠 BuildA Workshop</div><div class="level-pill" id="levelPill">LEVEL 1 · EASY</div></div>
+  <div class="game-layout">
+    <div class="main-game">
+      <div class="stats">
+        <div><small>⭐ SCORE</small><strong id="score">0000</strong></div>
+        <div class="timer-stat"><small>⏱ TIME LEFT</small><strong id="timer">05:00</strong><div class="timer-track"><i id="timerBar"></i></div></div>
+        <div><small>🧱 MATERIALS</small><strong id="materials">0</strong></div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-head"><span>🧠 CONSTRUCTION CHECK</span><span id="quizStatus">BOMB MATCH = QUIZ</span></div>
+        <h2 id="questionPrompt">Match a bomb tile to get your first question!</h2>
+        <div id="answers" class="answers hidden"></div>
+        <p id="quizFeedback" aria-live="polite">Tip: bomb tiles look like 💣. Match three to start a quiz.</p>
+      </div>
+      <div class="arena">
+        <div class="arena-title"><div><h2>🍭 Match arena</h2><p>Tap two neighbouring tiles to swap them</p></div><span id="combo">✨ READY!</span></div>
+        <div id="board" class="board" aria-label="Match-three tile board"></div>
+        <div class="arena-footer"><span>💣 Bombs matched: <b id="bombCount">0</b></span><button id="hintBtn" class="secondary">💡 Hint</button></div>
+      </div>
+    </div>
+    <aside class="sidebar">
+      <div class="build-card"><div class="build-title"><span>🏗️</span><div><h3>3D house progress</h3><p>Power up every level</p></div></div>
+        <div class="house-stage" id="houseStage">
+          <div class="stage-sun">☀️</div><div class="stage-roof" id="stageRoof"></div>
+          <div class="stage-walls" id="stageWalls"><div class="stage-window"></div><div class="stage-door"></div><div class="stage-window"></div></div>
+          <div class="stage-floor" id="stageFloor"></div>
+        </div>
+        <div class="progress-label"><span>LEVEL BUILD</span><b id="levelProgressText">0 / 3 QUIZZES</b></div><div class="progress-track"><i id="levelProgress"></i></div>
+        <div class="progress-label power-label"><span>POWER</span><b id="powerText">0%</b></div><div class="progress-track power-track"><i id="powerBar"></i></div>
+        <p id="buildMessage" class="build-message">Match a 💣 bomb tile to answer a question.</p>
+        <div class="build-steps"><span id="step1">🧱</span><span id="step2">🪟</span><span id="step3">🏠</span></div>
+      </div>
+      <div class="tip-card"><b>💬 BUILDER TIP</b><p id="builderTip">Floors provide a usable, level surface and transfer loads to the structure.</p></div>
+      <div class="level-list"><b>LEVEL ROUTE</b><div id="levelRoute"><span class="active">1 🌱 Easy</span><span>2 🧰 Medium</span><span>3 🏗️ Hard</span></div></div>
+    </aside>
+  </div>
+</section>
+
+<section id="result" class="screen result hidden">
+  <div class="celebration">🎉 ✨ 🏆 ✨ 🎉</div><div id="resultIcon" class="result-icon">🏡</div>
+  <div class="eyebrow">BUILDING REPORT</div><h2 id="resultTitle">Level complete!</h2><p id="resultText">Your house is taking shape.</p>
+  <div class="result-stats"><div><small>⭐ SCORE</small><strong id="resultScore">0</strong></div><div><small>🧠 QUESTIONS CORRECT</small><strong id="resultCorrect">0/3</strong></div><div><small>🧱 MATERIALS</small><strong id="resultMaterials">0</strong></div></div>
+  <p id="resultMessage" class="result-message">Great work!</p><div class="result-actions"><button id="continueBtn" class="primary">Continue to next level ▶</button><button id="replayBtn" class="secondary">Replay level ↻</button><button id="homeBtn" class="text-btn">Home</button></div>
+</section>
+</main>
+<footer><b>BuildA</b> · Learn the building blocks of better spaces <span>♥</span></footer>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="script.js"></script>
+</body>
+</html>
